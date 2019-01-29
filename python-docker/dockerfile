@@ -1,0 +1,20 @@
+# parent image behúzááás
+FROM python:2.7-slim
+
+# munkakönyvtár beállítása így fest
+WORKDIR /app
+
+# fájlok bemásolása így fest az imagebe
+COPY . /app
+
+# az alábbi txt fájl tartalmát felolvassa és megfuttatja rá a pip installert (python függőségek telepítése)
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+# konténeren belüli portok megnyitása így fest a külvilág felé
+EXPOSE 80
+
+# környezeti változók beadagolása így fest
+ENV TESZTVALTOZO tesztertek
+
+# terminál parancsok kiadása indulás után
+CMD ["python", "/app/pytarget/app.py"]
