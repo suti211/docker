@@ -45,7 +45,7 @@ def user_logged_in():
    
    
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=80)
+    app.run(debug=True, host='0.0.0.0', port=8080)
     app.config['SESSION_TYPE'] = 'memcached'
     app.config['SECRET_KEY'] = 'super secret key'
     logging.debug('Application started up successfully: ' + str(cddatetime.now().strftime("%A, %d. %B %Y %I:%M%p")))

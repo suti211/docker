@@ -1,22 +1,20 @@
 FROM node:9.11.1-alpine
 
-# install simple http server for serving static content
-RUN npm install -g http-server
+#DEV IMAGE
+# install vue cli
+RUN npm install -g @vue/cli
 
-# make the 'app' folder the current working directory
-WORKDIR /app
+# make the 'app/js' folder the current working directory
+WORKDIR /app/js
 
 # copy both 'package.json' and 'package-lock.json' (if available)
-COPY package*.json ./
+COPY ./frontend-app/package*.json ./
 
 # install project dependencies
 RUN npm install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
-COPY . .
+# COPY . .
 
-# build app for production with minification
-RUN npm run build
-
-EXPOSE 8080
-CMD [ "http-server", "dist" ]
+EXPOSE 80
+CMD [ "npx", "serve"]

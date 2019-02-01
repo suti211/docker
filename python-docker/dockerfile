@@ -11,7 +11,7 @@ COPY . /app
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 # konténeren belüli portok megnyitása így fest a külvilág felé
-EXPOSE 80
+EXPOSE 8080
 
 # környezeti változók beadagolása így fest
 ENV TESZTVALTOZO tesztertek
