@@ -1,4 +1,4 @@
-# manager_fe
+# frontend-app
 
 ## Project setup
 ```

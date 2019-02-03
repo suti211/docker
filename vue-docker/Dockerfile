@@ -17,4 +17,4 @@ RUN npm install
 # COPY . .
 
 EXPOSE 80
-CMD [ "npx", "serve"]
+CMD [ "npm", "run", "serve"]
