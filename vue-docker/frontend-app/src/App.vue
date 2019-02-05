@@ -6,6 +6,8 @@
             ul
                 li
                     router-link(to="/") Home
+                li
+                    router-link(to="/login") Login
         #content
             router-view
 </template>
