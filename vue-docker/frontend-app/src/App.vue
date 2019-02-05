@@ -1,8 +1,8 @@
 <template lang="pug">
     #app
         #head
-
-        #menu
+            //button(@click="toggleMenu") test
+        .menu(ref="menu", v-show="showMenu")
             ul
                 li
                     router-link(to="/") Home
@@ -10,7 +10,28 @@
             router-view
 </template>
 
-
+<script>
+    export default {
+        name: 'App',
+        data: () => {
+            return {
+                showMenu: true
+            }
+        },
+        methods: {
+            toggleMenu() {
+                if (this.showMenu) {
+                    this.$refs.menu.style.opacity = 0;
+                    setTimeout(() =>{this.showMenu = false;}, 500);
+                } else {
+                    this.showMenu = true;
+                    this.$refs.menu.style.opacity = 0;
+                    setTimeout(() =>{this.$refs.menu.style.opacity = 1;}, 500);
+                }
+            }
+        }
+    }
+</script>
 
 <style lang="less">
 #app {
@@ -23,6 +44,7 @@
     grid-template-columns: 1fr 11fr;
     grid-template-rows: 1fr 11fr;
     height: 100vh;
+    background-color: #DADADA;
 }
 
 #head {
@@ -34,13 +56,14 @@
     background-color: #008D54;
 }
 
-#menu {
+.menu {
     display: inline;
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 1;
     grid-column-end: 1;
     background-color: #545B58;
+    transition: opacity 0.5s ease-in;
 }
 
 ul {
@@ -72,6 +95,8 @@ ul {
     grid-row-end: 3;
     grid-column-start: 2;
     grid-column-end: 3;
+    background-color: #DADADA;
+    padding: 20px;
 }
 
 </style>

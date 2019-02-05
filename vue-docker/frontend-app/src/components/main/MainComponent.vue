@@ -1,6 +1,6 @@
 <template lang="pug">
-    h1
-        p Hello
+    .main
+        button(@click="testFunction") test
 </template>
 
 <script src="./MainComponent.js">

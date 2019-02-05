@@ -4,5 +4,12 @@ export default {
         return {
             page: 1
         }
+    },
+
+    methods: {
+        testFunction() {
+            this.page++;
+        }
     }
+
 }
