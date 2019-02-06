@@ -171,4 +171,7 @@ node_modules
 docs/_book
 test/
 
+### Python ###
+*.pyc
+
 # End of https://www.gitignore.io/api/node,vuejs,intellij+all
