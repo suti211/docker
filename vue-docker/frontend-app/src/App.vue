@@ -36,6 +36,9 @@
 </script>
 
 <style lang="less">
+
+@import './assets/varibles.less';
+@import './assets/fonts/icomoon/style.less';
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -46,7 +49,7 @@
     grid-template-columns: 1fr 11fr;
     grid-template-rows: 1fr 11fr;
     height: 100vh;
-    background-color: #DADADA;
+    background-color: var(--primary-color-background);
 }
 
 #head {
@@ -55,7 +58,7 @@
     grid-row-end: 1;
     grid-column-start: 1;
     grid-column-end: 3;
-    background-color: #008D54;
+    background-color: var(--primary-color-green);
 }
 
 .menu {
@@ -64,7 +67,7 @@
     grid-row-end: 3;
     grid-column-start: 1;
     grid-column-end: 1;
-    background-color: #545B58;
+    background-color: var(--primary-color-grey);
     transition: opacity 0.5s ease-in;
 }
 
@@ -86,7 +89,7 @@ ul {
         }
 
         &:hover {
-            background-color: #838A87;
+            background-color: var(--primary-color-hover);
         }
     }
 }
@@ -97,8 +100,8 @@ ul {
     grid-row-end: 3;
     grid-column-start: 2;
     grid-column-end: 3;
-    background-color: #DADADA;
-    padding: 20px;
+    background-color: var(--primary-color-background);
+    padding: var(--global-component-padding);
 }
 
 </style>
