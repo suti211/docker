@@ -1,0 +1,6 @@
+FROM mysql
+
+COPY ./init-scripts /init-scripts
+
+EXPOSE 3306:3306
+

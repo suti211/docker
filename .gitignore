@@ -174,4 +174,7 @@ test/
 ### Python ###
 *.pyc
 
+### mysql data files ###
+db-docker/data/*
+
 # End of https://www.gitignore.io/api/node,vuejs,intellij+all
