@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class StatusController {
 	
 	@GetMapping
-	public ResponseEntity ping(HttpSession session) {
+	public ResponseEntity ping() {
 		return ResponseEntity.ok().build();
 	}
 }
