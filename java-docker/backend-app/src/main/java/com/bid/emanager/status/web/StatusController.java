@@ -18,14 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/status")
 public class StatusController {
 	
-	@Value("${test.xyz}")
-	private String env;
-	
 	@GetMapping
 	public ResponseEntity ping(HttpSession session) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		log.info(env);
-		log.info("Locale:", LocaleContextHolder.getLocale());
 		return ResponseEntity.ok().build();
 	}
 }
