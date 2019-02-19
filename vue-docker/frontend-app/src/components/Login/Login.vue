@@ -13,8 +13,8 @@
                     input.form-input(id="pass" type="password")
                 .row
                     .button-container
-                        button Login
-                        button Register
+                        button(@click="login") Login
+                        button(@click="") Register
 </template>
 
 <script src="./Login.js">

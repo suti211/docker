@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
     name: "Login",
     data: () => {
@@ -6,6 +8,10 @@ export default {
         }
     },
     methods: {
-
+        login() {
+            //axios.defaults.headers.common['Access-Control-Allow-Origin'] = "*";
+            axios.get("http://localhost:8080/api/status")
+                .then(response => console.log(response));
+        }
     }
 }
