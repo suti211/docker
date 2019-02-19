@@ -13,6 +13,10 @@ services:
                     memory: 1024M
             restart_policy:
                 condition: on-failure
+        environment:
+            - MAINDB=${MYSQL_DATABASE}
+            - JAVA_USER=${MYSQL_USER}
+            - JAVA_PASS=${MYSQL_PASSWORD}
         ports:
             - "8080:8443"
         depends_on:
@@ -61,6 +65,15 @@ services:
         build: ./db-docker/
         volumes:
             - './db-docker/data:/var/lib/mysql'
+            - './db-docker/init-scripts:/docker-entrypoint-initdb.d'
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MAINDB=${MAINDB}
+            - JAVA_USER=${JAVA_USER}
+            - JAVA_PASS=${JAVA_PASS}
         deploy:
             replicas: 1
             resources:
@@ -70,8 +83,6 @@ services:
             restart_policy:
                 condition: on-failure
         restart: always
-        environment:
-            - MYSQL_ROOT_PASSWORD = 'root'
         ports:
             - "3306:3306"
         networks:

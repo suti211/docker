@@ -1,6 +1,6 @@
 FROM mysql
 
-COPY ./init-scripts /init-scripts
-
+RUN ls -l
+WORKDIR /
+RUN chmod +x /*.sh && chmod -R +x /docker-entrypoint-initdb.d
 EXPOSE 3306:3306
-
