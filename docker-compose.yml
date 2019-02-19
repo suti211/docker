@@ -1,7 +1,11 @@
 version : "3"
 services:
+    nginx:
+        build: ./nginx
+        restart: always
+        networks:
+            - webnet
     backend:
-        # image: suti211/python-tut:flaskapp
         build: ./java-docker/
         volumes:
             - './java-docker/backend-app:/app/backend-app'
@@ -17,6 +21,7 @@ services:
             - MAINDB=${MYSQL_DATABASE}
             - JAVA_USER=${MYSQL_USER}
             - JAVA_PASS=${MYSQL_PASSWORD}
+            - SPRING_PROFILES_ACTIVE=dev,docker,swagger
         ports:
             - "8080:8443"
         depends_on:
@@ -71,9 +76,6 @@ services:
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_DATABASE=${MYSQL_DATABASE}
-            - MAINDB=${MAINDB}
-            - JAVA_USER=${JAVA_USER}
-            - JAVA_PASS=${JAVA_PASS}
         deploy:
             replicas: 1
             resources:
