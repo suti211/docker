@@ -17,6 +17,7 @@ services:
             - JAVA_USER=${MYSQL_USER}
             - JAVA_PASS=${MYSQL_PASSWORD}
             - JAVA_SERVER_PORT=${JAVA_SERVER_PORT}
+            - JAVA_DEBUG_PW=${JAVA_DEBUG_PW}
             - SPRING_PROFILES_ACTIVE=dev,docker,swagger
         ports:
             - "8080:8080"
