@@ -1,12 +1,5 @@
 version : "3"
 services:
-    nginx:
-        build: ./nginx
-        restart: always
-        ports: 
-            - 80:80
-        networks:
-            - webnet
     backend:
         build: ./java-docker/
         volumes:
@@ -23,9 +16,10 @@ services:
             - MAINDB=${MYSQL_DATABASE}
             - JAVA_USER=${MYSQL_USER}
             - JAVA_PASS=${MYSQL_PASSWORD}
+            - JAVA_SERVER_PORT=${JAVA_SERVER_PORT}
             - SPRING_PROFILES_ACTIVE=dev,docker,swagger
         ports:
-            - "8080:8443"
+            - "8080:8080"
         depends_on:
             - redis
         networks:
@@ -34,7 +28,7 @@ services:
         build: ./vue-docker/
         volumes:
             - './vue-docker/frontend-app:/app/js'
-            - './logs:/root/.npm/'
+            - './logs:/root/.npm/_logs'
         deploy:
             replicas: 1
             resources:
@@ -45,11 +39,10 @@ services:
                     condition: on-failure
         environment:
             - CHOKIDAR_USEPOLLING=true
-            - PORT=8000
+            - PORT=4444
         ports:
-            - "8000:8000"
-        depends_on:
-            - backend
+            - "4444:4444"
+
         networks:
             - webnet
             
