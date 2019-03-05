@@ -4,8 +4,10 @@ export default {
     name: "Login",
     data: () => {
         return {
-            username: '',
+            email: '',
             password: '',
+            loading: false,
+            loginError: false,
             errors: []
         }
     },
@@ -18,23 +20,40 @@ export default {
         },
 
         login() {
+            this.loading = true;
+            this.loginError = false;
             axios.get("api/status")
-                .then(response => console.log(response));
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.loginError = true;
+
+                })
+                .finally(() => {
+                    this.loading = false;
+                    this.errors = [];
+                })
         },
 
         checkForm() {
-            if (this.username && this.password) {
+            if (this.email && this.password) {
                 return true;
             }
 
             this.errors = [];
 
-            if(!this.username) {
-                this.errors.push('username');
+            if(!this.email) {
+                this.errors.push('email-required');
+            } else {
+                if (this.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) == null) {
+                    this.errors.push('email-format-invalid')
+                }
             }
 
             if(!this.password) {
-                this.errors.push('password');
+                this.errors.push('pass-required');
             }
         }
     }

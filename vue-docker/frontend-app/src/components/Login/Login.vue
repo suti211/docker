@@ -8,19 +8,25 @@
                     .input-group.mb-3
                         .input-group-prepend
                             span.input-group-text.icon.iconuser
-                        input#email-input.form-control(type="email" placeholder="Email" v-model="username" no-validate)
-                    .validation-block(v-if="errors.includes('username')")
+                        input#email-input.form-control(type="email" placeholder="Email" v-model="email" no-validate)
+                    .validation-block(v-if="errors.includes('email-required')")
                         span Required!
+                    .validation-block(v-if="errors.includes('email-format-invalid')")
+                        span Invalid email format!
                     .input-group.mb-3
                         .input-group-prepend
                             span.input-group-text.icon.iconkey
                         input#password-input.form-control(type="password" placeholder="Password" v-model="password")
-                    .validation-block(v-if="errors.includes('password')")
+                    .validation-block(v-if="errors.includes('pass-required')")
                         span Required!
                     .input-group.mb-3.text-center
                         .center
-                            button.btn.btn-primary.large(@click="checkAndLogin") Login
+                            button.btn.btn-primary.large(@click="checkAndLogin" v-bind:disabled="loading") Login&nbsp
+                                span.spinner-border.spinner-border-sm(v-if="loading")
                             router-link.btn.btn-primary.large(to="/register") Register
+
+                    .alert-danger(v-if="loginError")
+                        span Error happened during login!
 </template>
 
 <script src="./Login.js">
@@ -56,10 +62,6 @@
 
         padding: var(--global-component-padding);
         background-color: white;
-    }
-
-    .center {
-        margin: 0 auto;
     }
 
     .head {

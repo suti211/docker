@@ -4,25 +4,43 @@
             .head
                 h2 Register
             .body
-                .row
-                    label(for="first-name") First name:
-                    input.form-input(v-model="firstName" id="first-name" type="text" maxlength=32)
-                .row
-                    label(for="last-name") Last name:
-                    input.form-input(v-model="lastName" id="last-name" type="text" maxlength=32)
-                .row
-                    label(for="mail") Email:
-                    //span.icon.iconuser.sized
-                    input.form-input(v-model="email" id="mail" type="text" maxlength="32")
-                .row
-                    label(for="pass") Password:
-                    input.form-input(v-model="password" id="pass" type="password")
-                .row
-                    label(for="repass") Repeat password:
-                    input.form-input(v-model="retypePassword" id="repass" type="password")
-                .row
-                    .button-container
-                        button(@click="register") Register
+                .body
+                form#login(novalidate)
+                    .input-group.mb-3
+                        .input-group-prepend
+                            span.input-group-text.icon.iconuser
+                        input.form-control(type="text" placeholder="First name" v-model="firstName" no-validate maxlength="32")
+
+                    .input-group.mb-3
+                        .input-group-prepend
+                            span.input-group-text.icon.iconuser
+                        input.form-control(type="text" placeholder="Last name" v-model="lastName" no-validate maxlength="32")
+
+                    .input-group.mb-3
+                        .input-group-prepend
+                            span.input-group-text.icon.iconmail4
+                        input.form-control(type="text" placeholder="Email address" v-model="email" no-validate maxlength="32")
+
+                    .input-group.mb-3
+                        .input-group-prepend
+                            span.input-group-text.icon.iconkey
+                        input.form-control(type="text" placeholder="Password" v-model="password" no-validate maxlength="32")
+
+                    .input-group.mb-3
+                        .input-group-prepend
+                            span.input-group-text.icon.iconkey
+                        input.form-control(type="text" placeholder="Repeat password" v-model="repeatPassword" no-validate maxlength="32")
+
+                    .alert-danger(v-for="error in errors") {{ error.message }}
+
+                    .input-group.mb-3
+                        .center
+                            button.btn.btn-primary.large(@click="startRegister" v-bind:disabled="loading") Register&nbsp
+                                span.spinner-border.spinner-border-sm(v-if="loading")
+                    .alert-danger(v-if="registerError")
+                        span Error happened during register!
+
+
 </template>
 
 <script src="./Register.js">
@@ -48,15 +66,6 @@
         box-shadow: 0px 5px 19px 8px rgba(0,0,0,0.58);
     }
 
-    .form-input {
-        display: inline-block;
-        height: var(--global-login-height);
-        width: ~'calc(100% - 30px)';
-        font-size: 1.5em;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
     .body {
 
         h4 {
@@ -68,47 +77,6 @@
         background-color: white;
     }
 
-    .row {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding-left: var(--global-component-padding);
-        padding-right: var(--global-component-padding);
-
-        .button-container {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            display: inline;
-
-            button {
-                padding-left: 10px;
-                padding-right: 10px;
-                margin-left: 20px;
-                margin-right: 20px;
-                background-color: var(--primary-color-green);
-                font-weight: bold;
-                height: 40px;
-                color: white;
-                width: 100px;
-                font-size: large;
-
-                &:hover {
-                    background-color: var(--primary-color-hover);
-                }
-            }
-        }
-
-        label {
-            text-align: left;
-            display: block;
-            font-weight: bold;
-        }
-    }
-
-    .sized {
-        height: var(--global-login-height);
-        width: var(--global-login-height);
-    }
-
     .head {
         background-color: var(--primary-color-green);
         h2 {
@@ -118,4 +86,13 @@
             color: white;
         }
     }
+
+    button.btn.btn-primary.large {
+        margin-top: 30px;
+    }
+
+    .alert-danger {
+        padding: 5px 10px;
+    }
+
 </style>
