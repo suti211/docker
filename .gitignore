@@ -177,6 +177,6 @@ test/
 db-docker/data/*
 
 ### java-maven repository ###
-./java-docker/maven/*
+java-docker/maven/*
 
 # End of https://www.gitignore.io/api/node,vuejs,intellij+all
