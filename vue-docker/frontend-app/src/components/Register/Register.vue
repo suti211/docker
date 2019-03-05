@@ -12,7 +12,7 @@
                     input.form-input(v-model="lastName" id="last-name" type="text" maxlength=32)
                 .row
                     label(for="mail") Email:
-                    span.icon.iconuser.sized
+                    //span.icon.iconuser.sized
                     input.form-input(v-model="email" id="mail" type="text" maxlength="32")
                 .row
                     label(for="pass") Password:
