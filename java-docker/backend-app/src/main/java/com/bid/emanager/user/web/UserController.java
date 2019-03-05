@@ -1,5 +1,6 @@
 package com.bid.emanager.user.web;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,13 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	@CrossOrigin
 	@PostMapping("/register")
 	public ResponseEntity register(@RequestBody UserDTO userDTO) {
+		if (StringUtils.isAnyBlank(userDTO.getEmail(), userDTO.getFirstName(),
+				userDTO.getLastName(), userDTO.getPassword(),
+				userDTO.getRepeatPassword())) {
+			return ResponseEntity.badRequest().build();
+		}
 		User user = userService.saveUser(userDTO);
 		
 		return user != null ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
