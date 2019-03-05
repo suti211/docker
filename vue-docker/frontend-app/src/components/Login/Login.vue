@@ -19,8 +19,8 @@
                         span Required!
                     .input-group.mb-3.text-center
                         .center
-                            button.btn.btn-primary(@click="checkAndLogin") Login
-                            button.btn.btn-primary(@click="") Register
+                            button.btn.btn-primary.large(@click="checkAndLogin") Login
+                            router-link.btn.btn-primary.large(to="/register") Register
 </template>
 
 <script src="./Login.js">
@@ -56,23 +56,6 @@
 
         padding: var(--global-component-padding);
         background-color: white;
-    }
-
-    button {
-        padding-left: 10px;
-        padding-right: 10px;
-        margin-left: 20px;
-        margin-right: 20px;
-        background-color: var(--primary-color-green);
-        font-weight: bold;
-        height: 40px;
-        color: white;
-        width: 100px;
-        font-size: large;
-
-        &:hover {
-            background-color: var(--primary-color-hover);
-        }
     }
 
     .center {
