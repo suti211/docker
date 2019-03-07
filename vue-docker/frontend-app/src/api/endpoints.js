@@ -8,5 +8,10 @@ export default {
     testEndpointWithParam: {
         url: 'backend/test?docId={}',
         method: 'POST'
+    },
+
+    register: {
+        url: '/api/user/register',
+        method: 'POST'
     }
 }

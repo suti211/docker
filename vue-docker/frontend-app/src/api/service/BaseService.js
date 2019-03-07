@@ -1,29 +1,24 @@
-
+import endpoints from '../endpoints';
+import axios from 'axios';
 export default {
     createPromise: (endpoint, params) => {
         let requestUrl;
         let requestMethod;
 
         if (endpoint) {
-            requestUrl = endpoint.url;
-            requestMethod = endpoint.method;
+            requestUrl = endpoints[endpoint].url;
+            requestMethod = endpoints[endpoint].method;
         }
 
-        switch (requestMethod) {
-            case 'POST':
-                break;
-            case 'PUT':
-                break;
-            case 'DELETE';
-                break;
-            default:
-                break;
+        let axiosConfigObj = {
+            url: '',
+            method: '',
+            data: params || {},
         }
-    },
 
-    testAxios: () => {
-        return {
-            axios.get("backend/test")
-        }
+        axiosConfigObj.url = requestUrl;
+        axiosConfigObj.method = requestMethod;
+
+        return axios(axiosConfigObj);
     }
 }
