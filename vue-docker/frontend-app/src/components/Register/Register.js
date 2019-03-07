@@ -9,14 +9,14 @@ export default {
             password: '',
             repeatPassword: '',
             email: '',
-            registerError: false,
             errors: []
         }
     },
 
     computed: mapGetters({
         registerSuccess: 'isRegisterSuccessful',
-        loading: 'isLoading'
+        loading: 'isLoading',
+        registerError: 'hasError'
     }),
     methods: {
         ...mapActions({
@@ -37,19 +37,7 @@ export default {
                 password: this.password,
                 repeatPassword: this.repeatPassword
             }
-
             this.sendRegisterRequest(body);
-
-            // axios.post("/api/user/register", body)
-            //     .then(response => {
-            //         console.log(response);
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //     })
-            //     .finally(() => {
-            //         this.loading = false;
-            //     });
         },
 
         checkIsValid() {

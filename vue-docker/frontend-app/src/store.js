@@ -9,17 +9,22 @@ export default new Vuex.Store({
         register: {
             loginSuccess: false,
             registerSuccess: false,
-            loading: false
+            loading: false,
+            error: false
         }
     },
     // sync
     mutations: {
-        CHANGE_REGISTER_STATE: (state, status) => {
-            state.register.registerSuccess = status;
+        CHANGE_REGISTER_SUCCESS: (state, success) => {
+            state.register.registerSuccess = success;
         },
-        CHANGE_REGISTER_LOADING: (state, loading) => {
-            state.register.loading = loading;
-        }
+
+        CHANGE_REGISTER_LOADING: (state, isLoading) => {
+            state.register.loading = isLoading;
+        },
+        CHANGE_REGISTER_ERROR: (state, error) => {
+            state.register.error = error;
+        },
     },
     // async
     actions: {
@@ -27,16 +32,18 @@ export default new Vuex.Store({
             context.commit('CHANGE_REGISTER_LOADING', true);
             RegisterService.postRegisterRequest(registerBody)
                 .then(response => {
+                    console.log(response);
                     if (response){
-                        context.commit('CHANGE_REGISTER_STATE', true);
+                        context.commit('CHANGE_REGISTER_SUCCESS', true);
                     }
                 })
                 .catch( () => {
-                    context.commit('CHANGE_REGISTER_STATE', false);
+                    context.commit('CHANGE_REGISTER_SUCCESS', false);
+                    context.commit('CHANGE_REGISTER_ERROR', true);
                 })
                 .finally( () => {
-                    context.commit('CHANGE_REGISTER_LOADING', false)
-                })
+                    context.commit('CHANGE_REGISTER_LOADING', false);
+                });
         }
     },
     getters: {
@@ -46,6 +53,10 @@ export default new Vuex.Store({
 
         isLoading: (state) => {
             return state.register.loading;
+        },
+
+        hasError: (state) => {
+            return state.register.error;
         }
     }
 })

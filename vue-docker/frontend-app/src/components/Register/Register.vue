@@ -33,12 +33,13 @@
 
                     .alert-danger(v-for="error in errors") {{ error.message }}
 
+                    .alert-danger(v-if="registerError")
+                        span Error happened during register!
+
                     .input-group.mb-3
                         .center
                             button.btn.btn-primary.large(@click="startRegister" v-bind:disabled="loading") Register&nbsp
-                                span.spinner-border.spinner-border-sm(v-if="loading")
-                    .alert-danger(v-if="registerError")
-                        span Error happened during register!
+                                span.spinner-border.spinner-border-sm(v-show="loading")
 
 
 </template>
