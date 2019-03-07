@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { mapState, mapGetters, mapActions } from 'vuex';
+
 export default {
     name: 'Register',
     data: () => {
@@ -8,16 +9,25 @@ export default {
             password: '',
             repeatPassword: '',
             email: '',
-            loading: false,
             registerError: false,
             errors: []
         }
     },
+
+    computed: mapGetters({
+        registerSuccess: 'isRegisterSuccessful',
+        loading: 'isLoading'
+    }),
     methods: {
+        ...mapActions({
+            sendRegisterRequest: 'sendRegisterRequest'
+        }),
 
         startRegister() {
             this.errors = [];
-            this.checkIsValid();
+            if (this.checkIsValid()) {
+                this.register();
+            }
         },
 
         register() {
@@ -27,33 +37,59 @@ export default {
                 password: this.password,
                 repeatPassword: this.repeatPassword
             }
-            this.loading = true;
-            axios.post("/api/user/register", body)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+
+            this.sendRegisterRequest(body);
+
+            // axios.post("/api/user/register", body)
+            //     .then(response => {
+            //         console.log(response);
+            //     })
+            //     .catch(error => {
+            //         console.log(error);
+            //     })
+            //     .finally(() => {
+            //         this.loading = false;
+            //     });
         },
 
         checkIsValid() {
             if (this.checkIsFilledOut()){
-                this.checkPasswordMatch();
+                let passwordsMatching = this.checkPasswordMatch();
+
+                if (passwordsMatching) {
+                    this.checkPasswordStrength();
+                }
+            }
+
+            if (!this.errors.length) {
+                return true;
+            } else {
+                return false;
             }
         },
 
+        /**
+         * checks wether the given passwords are matching
+         * @returns {boolean}
+         */
         checkPasswordMatch() {
             if (this.password && this.repeatPassword) {
-                return this.password == this.repeatPassword;
+                let passwordsMatching = this.password == this.repeatPassword;
+
+                if (!passwordsMatching) {
+                    this.errors.push({ type: 'error', message: 'The given passwords are not matching!' });
+                }
+
+                return passwordsMatching;
             }
         },
 
+        /**
+         * Checks if all form fields are filled out, meanwhile pushes error object into
+         * the errors array.
+         * return boolean
+         */
         checkIsFilledOut() {
-
             if (!this.firstName) {
                 this.errors.push({ type: 'required', message: 'First name is required!' });
             }
@@ -78,10 +114,9 @@ export default {
         },
 
         checkPasswordStrength() {
-
             if (this.password) {
                 if (this.password.length < 6) {
-                    this.errors.push('Password is too short!')
+                    this.errors.push({ type: 'weak-password', message:'Password is too short!' })
                 }
             }
 
