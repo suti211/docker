@@ -13,12 +13,18 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     export default {
         name: 'App',
         data: () => {
             return {
-                showMenu: true
+
             }
+        },
+        computed: {
+            ...mapGetters({
+                showMenu: 'showMenu'
+            })
         },
         methods: {
             toggleMenu() {

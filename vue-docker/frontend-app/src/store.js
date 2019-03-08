@@ -1,17 +1,25 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import RegisterService from './api/service/RegisterService';
+import LoginService from './api/service/LoginService';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        main: {
+            showMenu: false
+        },
         register: {
-            loginSuccess: false,
             registerSuccess: false,
             loading: false,
             error: false,
             conflict: false
+        },
+
+        login: {
+            loading: false,
+            loginSuccess: false,
         }
     },
     // sync
@@ -19,7 +27,6 @@ export default new Vuex.Store({
         CHANGE_REGISTER_SUCCESS: (state, success) => {
             state.register.registerSuccess = success;
         },
-
         CHANGE_REGISTER_LOADING: (state, isLoading) => {
             state.register.loading = isLoading;
         },
@@ -29,6 +36,12 @@ export default new Vuex.Store({
         CHANGE_REGISTER_CONFLICT: (state, conflict) => {
             state.register.conflict = conflict;
         },
+        CHANGE_LOGIN_LOADING: (state, loading) => {
+            state.login.loading = loading;
+        },
+        CHANGE_MAIN_SHOWMENU: (state, show) => {
+            state.main.showMenu = show;
+        }
     },
     // async
     actions: {
@@ -54,22 +67,46 @@ export default new Vuex.Store({
                 .finally( () => {
                     context.commit('CHANGE_REGISTER_LOADING', false);
                 });
-        }
+        },
+
+        sendLoginRequest: (context, credentials) => {
+            context.commit('CHANGE_LOGIN_LOADING', true);
+            LoginService.login(credentials)
+                .then( (response) => {
+                    if (response.status == 200) {
+                        console.log("siker")
+                    }
+                })
+                .catch( (error) => {
+                    console.log("fail")
+                    console.log(error);
+                })
+                .finally( () => {
+                    context.commit('CHANGE_LOGIN_LOADING', false);
+                })
+        },
     },
     getters: {
+        showSideMenu: (state) => {
+            return state.main.showMenu;
+        },
         isRegisterSuccessful: (state) => {
             return state.register.registerSuccess;
         },
-
-        isLoading: (state) => {
+        isRegisterLoading: (state) => {
             return state.register.loading;
         },
-
         hasError: (state) => {
             return state.register.error;
         },
         hasConflict: (state) => {
             return state.register.conflict;
+        },
+        isLoginSuccessful: (state) => {
+            return state.login.loginSuccess;
+        },
+        isLoginLoading: (state) => {
+            return state.login.loading;
         }
     }
 })

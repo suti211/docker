@@ -1,4 +1,4 @@
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: 'Register',
@@ -13,12 +13,14 @@ export default {
         }
     },
 
-    computed: mapGetters({
-        registerSuccess: 'isRegisterSuccessful',
-        loading: 'isLoading',
-        registerError: 'hasError',
-        conflict: 'hasConflict'
-    }),
+    computed: {
+        ...mapGetters({
+            registerSuccess: 'isRegisterSuccessful',
+            loading: 'isRegisterLoading',
+            registerError: 'hasError',
+            conflict: 'hasConflict'
+        })
+    },
     methods: {
         ...mapActions({
             sendRegisterRequest: 'sendRegisterRequest'

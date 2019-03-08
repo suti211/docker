@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: "Login",
@@ -6,35 +6,27 @@ export default {
         return {
             email: '',
             password: '',
-            loading: false,
             loginError: false,
             errors: []
         }
     },
+    computed: {
+        ...mapGetters({
+            loading: 'isLoginLoading'
+        })
+    },
     methods: {
+        ...mapActions({
+            login: 'sendLoginRequest'
+        }),
 
         checkAndLogin() {
             if (this.checkForm()) {
-                this.login();
+                this.login({
+                    username: this.email,
+                    password: this.password
+                });
             }
-        },
-
-        login() {
-            this.loading = true;
-            this.loginError = false;
-            axios.get("api/status")
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.loginError = true;
-
-                })
-                .finally(() => {
-                    this.loading = false;
-                    this.errors = [];
-                })
         },
 
         checkForm() {
