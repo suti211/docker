@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CredentialValidationException extends Exception {
-	String message;
-	Throwable payload;
+	protected String message;
+	protected Throwable payload;
 }
