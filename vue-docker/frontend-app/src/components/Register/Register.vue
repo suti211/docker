@@ -24,17 +24,20 @@
                     .input-group.mb-3
                         .input-group-prepend
                             span.input-group-text.icon.iconkey
-                        input.form-control(type="text" placeholder="Password" v-model="password" no-validate maxlength="32")
+                        input.form-control(type="password" placeholder="Password" v-model="password" no-validate maxlength="32")
 
                     .input-group.mb-3
                         .input-group-prepend
                             span.input-group-text.icon.iconkey
-                        input.form-control(type="text" placeholder="Repeat password" v-model="repeatPassword" no-validate maxlength="32")
+                        input.form-control(type="password" placeholder="Repeat password" v-model="repeatPassword" no-validate maxlength="32")
 
                     .alert-danger(v-for="error in errors") {{ error.message }}
 
                     .alert-danger(v-if="registerError")
                         span Error happened during register!
+
+                    .alert-danger(v-if="conflict")
+                        span This address is already in use!
 
                     .input-group.mb-3
                         .center

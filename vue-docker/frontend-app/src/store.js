@@ -10,7 +10,8 @@ export default new Vuex.Store({
             loginSuccess: false,
             registerSuccess: false,
             loading: false,
-            error: false
+            error: false,
+            conflict: false
         }
     },
     // sync
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         CHANGE_REGISTER_ERROR: (state, error) => {
             state.register.error = error;
         },
+        CHANGE_REGISTER_CONFLICT: (state, conflict) => {
+            state.register.conflict = conflict;
+        },
     },
     // async
     actions: {
@@ -33,11 +37,17 @@ export default new Vuex.Store({
             RegisterService.postRegisterRequest(registerBody)
                 .then(response => {
                     console.log(response);
-                    if (response){
+                    if (response.status == 201) {
                         context.commit('CHANGE_REGISTER_SUCCESS', true);
+                        context.commit('CHANGE_REGISTER_ERROR', false);
+                        context.commit('CHANGE_REGISTER_CONFLICT', false)
                     }
+
                 })
-                .catch( () => {
+                .catch( (error) => {
+                    if (error.status == 409){
+                        context.commit('CHANGE_REGISTER_CONFLICT', true)
+                    }
                     context.commit('CHANGE_REGISTER_SUCCESS', false);
                     context.commit('CHANGE_REGISTER_ERROR', true);
                 })
@@ -57,6 +67,9 @@ export default new Vuex.Store({
 
         hasError: (state) => {
             return state.register.error;
+        },
+        hasConflict: (state) => {
+            return state.register.conflict;
         }
     }
 })

@@ -16,7 +16,8 @@ export default {
     computed: mapGetters({
         registerSuccess: 'isRegisterSuccessful',
         loading: 'isLoading',
-        registerError: 'hasError'
+        registerError: 'hasError',
+        conflict: 'hasConflict'
     }),
     methods: {
         ...mapActions({
@@ -32,6 +33,7 @@ export default {
 
         register() {
             let body = {
+                email: this.email,
                 firstName: this.firstName,
                 lastName: this.lastName,
                 password: this.password,
@@ -47,6 +49,8 @@ export default {
                 if (passwordsMatching) {
                     this.checkPasswordStrength();
                 }
+
+                this.checkEmailValid();
             }
 
             if (!this.errors.length) {
@@ -72,6 +76,14 @@ export default {
             }
         },
 
+        checkEmailValid() {
+            if (this.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) == null) {
+                this.errors.push({ type: 'email-invlalid', message:'Invalid email format!' })
+                return false;
+            } else {
+                return true;
+            }
+        },
         /**
          * Checks if all form fields are filled out, meanwhile pushes error object into
          * the errors array.
