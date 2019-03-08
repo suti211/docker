@@ -16,7 +16,9 @@ import com.bid.emanager.user.web.UserDTO;
 import com.bid.emanager.validators.UserValidator;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor=@__({ @Autowired }))
 public class UserServiceImpl implements UserService {
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
 		
 		User checkUser = findUserByEmail(userDTO.getEmail());
 		if (checkUser != null) {
+			log.info("User already registered!: {}", userDTO.getEmail());
 			return null;
 		}
 		

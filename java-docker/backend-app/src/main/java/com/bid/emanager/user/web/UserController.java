@@ -14,7 +14,9 @@ import com.bid.emanager.entity.User;
 import com.bid.emanager.user.UserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor(onConstructor= @__({ @Autowired }))
@@ -24,6 +26,7 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public ResponseEntity register(@RequestBody UserDTO userDTO) {
+		log.info("Register attempt with data: {}", userDTO);
 		if (StringUtils.isAnyBlank(userDTO.getEmail(), userDTO.getFirstName(),
 				userDTO.getLastName(), userDTO.getPassword(),
 				userDTO.getRepeatPassword())) {

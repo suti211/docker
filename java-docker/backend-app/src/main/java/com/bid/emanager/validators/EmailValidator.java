@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.bid.emanager.validators.exception.InvalidEmailAddressException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class EmailValidator {
 
@@ -24,9 +27,11 @@ public class EmailValidator {
 		Matcher matcher = pattern.matcher(email);
 		boolean isValid = matcher.matches();
 		if (isValid) {
+			log.info("User trying to register with valid email: {}", email);
 			return true;
 		} else {
-			throw new InvalidEmailAddressException();
+			log.error("User trying to register with invalid email format: {}", email);
+			throw new InvalidEmailAddressException("Invalid Email: " + email);
 		}
 	}
 }
