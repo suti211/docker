@@ -18,6 +18,10 @@ import org.springframework.util.StringUtils;
 public class SuccessfulAuthenticationHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private RequestCache requestCache = new HttpSessionRequestCache();
 
+	/**
+	 * spring form loginja sikeres autentikációnál 301 moved permanently választ ad vissza, aminek
+	 * rest apinál nincs sok haszna ez megszünteti ezt.
+	 */
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
