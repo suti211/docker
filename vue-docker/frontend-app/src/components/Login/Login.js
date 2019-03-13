@@ -23,7 +23,7 @@ export default {
         checkAndLogin() {
             if (this.checkForm()) {
                 this.login({
-                    username: this.email,
+                    email: this.email,
                     password: this.password
                 });
             }
