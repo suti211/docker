@@ -1,10 +1,14 @@
 package com.bid.emanager.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -16,5 +20,10 @@ public class AuthenticationConfig extends GlobalAuthenticationConfigurerAdapter{
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider);
+	}
+	
+	@Bean
+	public AuthenticationFailureHandler failureHandler() {
+		return new SimpleUrlAuthenticationFailureHandler();
 	}
 }
