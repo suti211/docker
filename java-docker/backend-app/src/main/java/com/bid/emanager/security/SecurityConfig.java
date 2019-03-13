@@ -5,10 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
@@ -23,21 +24,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final RestAuthenticationEntryPoint authenticationEntryPoint;
 	private final SuccessfulAuthenticationHandler successHandler;
+	private final AuthenticationFailureHandler failureHandler;
 	
 	@Override
 	  protected void configure(HttpSecurity http) throws Exception {
 	    http
 	    .authorizeRequests()
 	    	.antMatchers("/user/register").permitAll()
-	    	.antMatchers("/user/login").permitAll()
+	    	.antMatchers("/user/signin").permitAll()
 	    	.antMatchers("/user/logout").permitAll()
 	    	.antMatchers("/login").permitAll()
 	    	.antMatchers("/status").permitAll()
 	    	.antMatchers("/v2/api-docs", "/configuration/ui",  "/swagger-resources", "/swagger-resources/**",
 	    			"/configuration/security", "/swagger-ui.html", "/webjars/**", "/csrf").permitAll()
 	    	.anyRequest().fullyAuthenticated()
-	    .and().formLogin().loginProcessingUrl("/user/login").successHandler(successHandler)
-	    .and().logout().logoutUrl("/user/logout").deleteCookies("JSESSIONID").invalidateHttpSession(true)
+	    .and().formLogin().loginProcessingUrl("/user/login").successHandler(successHandler).failureHandler(failureHandler)
+	    .and().logout().logoutUrl("/user/logout").deleteCookies("SESSIONID").invalidateHttpSession(true)
 	    	.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
 	    .and().exceptionHandling()
 	    .authenticationEntryPoint(authenticationEntryPoint).and()
@@ -59,4 +61,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    return loggingFilter;
 	}
 
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+	
 }
